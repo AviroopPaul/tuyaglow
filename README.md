@@ -18,6 +18,18 @@ TuyaGlow is a small menu bar app. It makes a Tuya Wi-Fi bulb react to the music 
 
 Website: **https://avirooppaul.github.io/tuyaglow/**
 
+## Set up with an AI agent (fastest)
+
+Paste this into Claude Code, Codex, Cursor or any coding agent on your Mac:
+
+```text
+Set up TuyaGlow on this Mac for my Tuya / Smart Life bulb by following the Setup section of https://github.com/AviroopPaul/tuyaglow.
+Install the latest release, run scripts/get-local-key.py and guide me through the Smart Life QR scan,
+then save my bulb's device ID, local key, IP and version into TuyaGlow ("For agents" in step 3) and confirm the bulb responds.
+```
+
+You only need to type your Smart Life User Code, scan one QR code, and allow Screen Recording. Prefer to do it by hand? See [Setup](#setup).
+
 ## Features
 
 - **Music mode.** Locks onto the beat like a lighting desk. Pulses on every beat, new color on beat 1 of each bar. Breakdowns fade slowly, build-ups speed up, drops get a white strobe. Half-time on fast tracks. An **Intense** option also flashes on hi-hats.
@@ -87,6 +99,16 @@ Already use [tinytuya](https://github.com/jasonacox/tinytuya)? Its `python -m ti
 4. Click **Save**.
 
 No device ID yet? Click **Find on Wi-Fi** with the field empty to list every Tuya device on your network.
+
+**For agents.** The same settings can be written from Terminal, using the values the key script printed. Quit TuyaGlow first, then open it again:
+
+```bash
+defaults write site.aviroop.tuyaglow deviceID "<device id>"
+defaults write site.aviroop.tuyaglow ip "<ip>"
+defaults write site.aviroop.tuyaglow version "<3.3|3.4|3.5>"
+security add-generic-password -U -s site.aviroop.tuyaglow -a localKey -T /Applications/TuyaGlow.app -w "<local key>"
+open /Applications/TuyaGlow.app --args -startMode Light   # the bulb should turn on; check ~/Library/Logs/TuyaGlow.log
+```
 
 ### 4. Allow Screen Recording
 
