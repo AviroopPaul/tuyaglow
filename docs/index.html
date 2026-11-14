@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TuyaGlow: Music and Screen Sync for Tuya Smart Bulbs on Mac</title>
+<meta name="description" content="Free, open source Mac app that syncs Tuya and Smart Life smart bulbs to music and screen colors. Works with Wipro and other Tuya Wi-Fi bulbs. Local control, no cloud.">
+<meta name="keywords" content="Tuya smart bulb, Smart Life bulb, music sync, sound reactive light, Mac, macOS, screen sync, Ambilight, Wipro smart bulb, Syska smart bulb, Tuya local control, RGB bulb, India">
+<link rel="canonical" href="https://avirooppaul.github.io/tuyaglow/">
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="theme-color" content="#16130f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TuyaGlow: make your Tuya smart bulb dance to your Mac's music">
+<meta property="og:description" content="Music sync, screen sync and simple controls for Tuya and Smart Life bulbs. Free, open source, fully local.">
+<meta property="og:url" content="https://avirooppaul.github.io/tuyaglow/">
+<meta property="og:image" content="https://avirooppaul.github.io/tuyaglow/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TuyaGlow: music and screen sync for Tuya smart bulbs">
+<meta name="twitter:description" content="Free Mac app. Your Tuya / Smart Life bulb pulses to the beat, follows your screen, or works as a normal bulb.">
+<meta name="twitter:image" content="https://avirooppaul.github.io/tuyaglow/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TuyaGlow",
+  "description": "Mac menu bar app that syncs Tuya and Smart Life Wi-Fi smart bulbs to music and screen colors, with local control and no cloud.",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "macOS 14 or later",
+  "softwareVersion": "0.1.0",
+  "url": "https://avirooppaul.github.io/tuyaglow/",
+  "downloadUrl": "https://github.com/AviroopPaul/tuyaglow/releases/latest/download/TuyaGlow-macos.zip",
+  "image": "https://avirooppaul.github.io/tuyaglow/og-image.png",
+  "license": "https://opensource.org/licenses/MIT",
+  "codeRepository": "https://github.com/AviroopPaul/tuyaglow",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "author": { "@type": "Person", "name": "Aviroop Paul", "url": "https://avirooppaul.site" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Can I sync a Tuya smart bulb to music on a Mac?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. TuyaGlow is a free Mac app that makes Tuya and Smart Life Wi-Fi bulbs pulse to the beat of any music playing on the Mac, including Spotify, YouTube and Apple Music." } },
+    { "@type": "Question", "name": "Does TuyaGlow work with Wipro smart bulbs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Wipro Smart RGBCW 9W bulb is tested. Wipro smart bulbs are built on the Tuya platform." } },
+    { "@type": "Question", "name": "Do I need a Tuya developer account?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. A one-time script gets the bulb's local key through the Smart Life app's QR sign-in. After that the app works fully on your local Wi-Fi." } },
+    { "@type": "Question", "name": "Does it use the Tuya cloud?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. TuyaGlow controls the bulb directly on your Wi-Fi with Tuya's local protocol 3.3, 3.4 or 3.5." } },
+    { "@type": "Question", "name": "Can my smart bulb follow my screen like Ambilight?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Screen mode reads the main color on your display and sends it to the bulb several times a second." } }
+  ]
+}
+</script>
+<style>
+:root {
+  --bg: #f5f1ea; --surface: #ece6dc; --ink: #24201b; --muted: #6e655a; --line: #d9d0c3;
+  --accent: #b5743a; --accent-ink: #fff8ef; --code: #e6dfd3;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #16130f; --surface: #201c17; --ink: #ece5da; --muted: #a39887; --line: #342e27;
+          --accent: #d29455; --accent-ink: #1a140d; --code: #29241e; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 17px/1.6 Geist, -apple-system, system-ui, sans-serif; }
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+header.nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; color: var(--ink); }
+.brand img { width: 30px; height: 30px; }
+.nav a.gh { color: var(--muted); text-decoration: none; font-size: 15px; }
+.hero { padding: 48px 0 28px; }
+.hero h1 { font-size: clamp(32px, 5vw, 50px); line-height: 1.12; margin: 0 0 16px; font-weight: 600; letter-spacing: -0.02em; max-width: 760px; }
+.hero p { color: var(--muted); font-size: 19px; max-width: 640px; margin: 0 0 26px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.btn { display: inline-block; padding: 12px 20px; border-radius: 10px; font-weight: 500; text-decoration: none; font-size: 16px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.ghost { border: 1px solid var(--line); color: var(--ink); }
+.small { color: var(--muted); font-size: 14px; }
+.video { margin: 30px 0 10px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #111; }
+.video video { display: block; width: 100%; height: auto; }
+section { padding: 38px 0; border-top: 1px solid var(--line); }
+h2 { font-size: 26px; margin: 0 0 18px; font-weight: 600; letter-spacing: -0.01em; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+.card h3 { margin: 0 0 6px; font-size: 17px; font-weight: 600; }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.tag { display: inline-block; font: 12px "Geist Mono", ui-monospace, monospace; color: var(--accent); margin-bottom: 8px; }
+ol.steps { margin: 0; padding-left: 22px; }
+ol.steps li { margin: 0 0 10px; }
+code, pre { font-family: "Geist Mono", ui-monospace, monospace; font-size: 14px; }
+code { background: var(--code); padding: 2px 6px; border-radius: 5px; }
+pre { background: var(--code); padding: 14px 16px; border-radius: 10px; overflow-x: auto; margin: 10px 0 0; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--muted); font-weight: 500; }
+details { border-bottom: 1px solid var(--line); padding: 12px 0; }
+summary { cursor: pointer; font-weight: 500; }
+details p { color: var(--muted); margin: 8px 0 0; }
+footer { padding: 30px 0 50px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--line); }
+@media (max-width: 600px) { body { font-size: 16px; } .hero { padding-top: 24px; } th:nth-child(3), td:nth-child(3) { display: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="nav">
+    <a class="brand" href="./"><img src="icon.png" alt="">TuyaGlow</a>
+    <a class="gh" href="https://github.com/AviroopPaul/tuyaglow">GitHub</a>
+  </header>
+
+  <div class="hero">
+    <h1>Make your Tuya smart bulb dance to your Mac's music.</h1>
+    <p>TuyaGlow is a free Mac app for Tuya and Smart Life Wi-Fi bulbs. The bulb pulses on the beat, follows your screen, or works as a normal light. It runs on your Wi-Fi only. No cloud.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/AviroopPaul/tuyaglow/releases/latest/download/TuyaGlow-macos.zip">Download for Mac</a>
+      <a class="btn ghost" href="https://github.com/AviroopPaul/tuyaglow#setup">Setup guide</a>
+      <span class="small">v0.1.0 · macOS 14+ · Apple Silicon and Intel · MIT</span>
+    </div>
+    <div class="video">
+      <video src="demo.mp4" poster="og-image.png" autoplay muted loop playsinline aria-label="Demo: a smart bulb pulsing to music, strobing on a drop, following the screen and then warm white"></video>
+    </div>
+  </div>
+
+  <section>
+    <h2>Four modes</h2>
+    <div class="grid">
+      <div class="card"><span class="tag">MUSIC</span><h3>Locks onto the beat</h3><p>Pulses on every beat, new color each bar. Fades in breakdowns, builds up, strobes on the drop.</p></div>
+      <div class="card"><span class="tag">SCREEN</span><h3>Follows your display</h3><p>The bulb takes the main color of your screen, like Ambilight. Picks the display you are using.</p></div>
+      <div class="card"><span class="tag">LIGHT</span><h3>A normal bulb</h3><p>Five white shades from Candle to Cool, color swatches, a color picker and brightness.</p></div>
+      <div class="card"><span class="tag">LOCAL</span><h3>No cloud</h3><p>Talks to the bulb on your Wi-Fi with Tuya's local protocol 3.3, 3.4 and 3.5. Fast and private.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Works with Tuya bulbs</h2>
+    <p>Many smart bulbs are Tuya bulbs under another brand. If your Wi-Fi bulb pairs with <b>Smart Life</b> or <b>Tuya Smart</b>, it should work.</p>
+    <table>
+      <tr><th>Bulb</th><th>Status</th><th>App</th></tr>
+      <tr><td>Wipro Smart RGBCW 9W</td><td>Tested, protocol 3.5</td><td>Wipro Next / Smart Life</td></tr>
+      <tr><td>Syska Smart LED</td><td>Pairs with Smart Life. Not tested yet</td><td>Smart Life</td></tr>
+      <tr><td>Other Smart Life / Tuya Smart bulbs</td><td>Should work</td><td>Smart Life / Tuya Smart</td></tr>
+    </table>
+    <p class="small">Tested another bulb? <a href="https://github.com/AviroopPaul/tuyaglow/issues">Tell us</a> so others know.</p>
+  </section>
+
+  <section>
+    <h2>Set up in five steps</h2>
+    <ol class="steps">
+      <li><b>Install.</b> Download the zip, move TuyaGlow to Applications, right-click it and choose Open.</li>
+      <li><b>Get your bulb's key.</b> Run the included script. Scan its QR code with the Smart Life app. It prints your device ID and local key. No developer account needed.
+<pre>python3 -m venv .venv && .venv/bin/pip install tuya-device-sharing-sdk "qrcode[pil]" cryptography
+.venv/bin/python scripts/get-local-key.py</pre></li>
+      <li><b>Connect.</b> In TuyaGlow, open Bulb settings, paste the ID and key, click Find on Wi-Fi, then Save.</li>
+      <li><b>Allow Screen Recording.</b> macOS asks the first time. It lets the app hear system sound and see screen colors. Nothing is saved.</li>
+      <li><b>Pick a mode.</b> Play music, open a video, or set a warm white.</li>
+    </ol>
+    <p><a href="https://github.com/AviroopPaul/tuyaglow#setup">Full setup guide and troubleshooting</a></p>
+  </section>
+
+  <section>
+    <h2>Questions</h2>
+    <details><summary>Can I sync a Tuya smart bulb to music on a Mac?</summary><p>Yes. TuyaGlow makes Tuya and Smart Life bulbs pulse to whatever plays on your Mac: Spotify, YouTube, Apple Music or games.</p></details>
+    <details><summary>Does it work with Wipro smart bulbs?</summary><p>Yes. The Wipro Smart RGBCW 9W is tested. Wipro smart bulbs are built on Tuya.</p></details>
+    <details><summary>Do I need a Tuya developer account?</summary><p>No. The key script uses the Smart Life app's QR sign-in, once.</p></details>
+    <details><summary>Does it use the internet?</summary><p>Only the one-time key script. The app itself only talks to your bulb on your Wi-Fi.</p></details>
+    <details><summary>Why does Netflix go black in Screen mode?</summary><p>Streaming apps block their video while any screen capture runs. This is copy protection. Use Music or Light mode while you watch.</p></details>
+    <details><summary>Does it work on Windows?</summary><p>No, TuyaGlow is for macOS. On Windows, try OpenTuyaSync or LumiSync.</p></details>
+  </section>
+
+  <footer>
+    TuyaGlow is free and open source under the MIT license. Made by <a href="https://avirooppaul.site">Aviroop Paul</a>.
+    Not affiliated with Tuya, Smart Life, Wipro or Syska. <a href="https://github.com/AviroopPaul/tuyaglow">Source on GitHub</a>.
+  </footer>
+</div>
+</body>
+</html>
